@@ -25,7 +25,7 @@ with:
 
 {{#loop some_object}}
     {{__key}}: {{firstname}} - {{lastname}}<br />
-{{/#loop}}
+{{/loop}}
 
 will print:
 
