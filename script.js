@@ -9,9 +9,11 @@ Handlebars.registerHelper ( 'loop', function ( context, fn, inverse) {
         }
         else
         {
+            var i = 0;
             for ( var attr in context )
             {
                 context [ attr ] [ '__key' ] = attr;
+                context [ attr ] [ '__pos' ] = i++;
                 ret = ret + fn ( context [ attr ] );
             }
         }
