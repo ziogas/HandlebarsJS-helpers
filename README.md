@@ -1,7 +1,8 @@
 HandlebarsJS helpers
 ==============
 
-Several helpers for you to help working with handlebarsjs (https://github.com/wycats/handlebars.js/)
+Several helpers for you to help working with handlebarsjs (https://github.com/wycats/handlebars.js/) 
+Tested and working on 1.0.beta.2
 
 DOWNLOAD
 --------------
@@ -66,6 +67,8 @@ foo=bar
 
 will make tmp_var="this is some combined string with bar variable"
 
+
+You can see and examine other functions in script.js
 
 
 LICENSE
