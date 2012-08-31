@@ -311,6 +311,10 @@ Handlebars.registerHelper ( 'substr', function( str, arg1, arg2 ) {
     
 } );
 
+Handlebars.registerHelper ( 'timestamp', function( str ) {
+    return new Handlebars.SafeString ( new Date().getTime() );
+});
+
 Handlebars.registerHelper ( 'partial', function ( part ) { 
 
     return new Handlebars.SafeString ( Handlebars.VM.invokePartial(Handlebars.partials [ part ], part, this, Handlebars.helpers, Handlebars.partials ) );
