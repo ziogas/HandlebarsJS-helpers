@@ -1,85 +1,90 @@
 //Better loop with magic attributes
-Handlebars.registerHelper ( 'loop', function ( context, fn, inverse) {
-    var ret = "";
+Handlebars.registerHelper ( 'loop', function ( context, options ) {
+
+    var ret = '';
 
     if ( context )
     {
         if ( context instanceof Array && context.length < 1 )
-        {
-            ret = inverse ( ret );
+        {   
+            ret = options.inverse ( ret );
         }
         else
         {
             var i = 0;
-            for ( var attr in context )
+            for ( var attr in context ) 
             {
-                context [ attr ] [ '__key' ] = attr;
+                if ( attr.indexOf ( '__' ) === 0 )
+                {
+                    continue;
+                }
+
+                if ( typeof context [ attr ] == "string" )
+                {
+                    context [ attr ] = { value: context [ attr ] };
+                }
+
+                context [ attr ] [ '__key' ] = attr; 
                 context [ attr ] [ '__pos' ] = i++;
-                ret = ret + fn ( context [ attr ] );
+                ret = ret + options.fn ( context [ attr ] );
             }
         }
     }
     else
-    {
-        ret = inverse ( ret );
+    { 
+        ret = options.inverse ( ret );
     }
 
     return ret;
 });
 
-
 //"IF" style function 
-Handlebars.registerHelper ( 'check', function(  arg1, arg2, fn, inverse ) {
-
-    if ( !arg2 )
-    {
-        return Handlebars.helpers['if'].call(this, arg1, fn, inverse);
-    }
+Handlebars.registerHelper ( 'check', function(arg1, arg2, options) {
 
     if ( arg1 == arg2 )
     {
-        return fn(this);
+        return options.fn(this);
     }
     else
     {
-        return inverse(this);
+        return options.inverse(this);
     }
 });
-
-//"IF" style function
-Handlebars.registerHelper ( 'checknot', function(arg1, arg2, fn, inverse) {
-
-   return Handlebars.helpers['check'].call(this, arg1, arg2, inverse, fn);
 });
 
 //"IF" style function
-Handlebars.registerHelper ( 'indexOfZero', function( stack, needle, fn, inverse) {
- 
+Handlebars.registerHelper ( 'checknot', function(arg1, arg2, options) {
+   return Handlebars.helpers['check'].call(this, arg1, arg2, { fn: options.inverse, inverse: options.fn });
+});
+
+//"IF" style function
+Handlebars.registerHelper ( 'indexOfZero', function( stack, needle, options) {
+
     if ( stack && stack.indexOf ( needle ) === 0 )
     {
-        return fn(this);
+        return options.fn(this);
     }
     else
     {
-        return inverse(this);
+        return options.inverse(this);
     }
 });
 
 //"IF" style function
-Handlebars.registerHelper ( 'haskey', function( arr, key, fn, inverse) {
+Handlebars.registerHelper ( 'haskey', function( arr, key, options) {
 
     if ( arr && arr [ key ] )
     {
-        return fn(this);
+        return options.fn(this);
     }
     else
     {
-        return inverse(this);
+        return options.inverse(this);
     }
 });
 
 //Quick "IF"
-Handlebars.registerHelper ( 'eq', function( arg1, arg2, ok, bad ) {
+Handlebars.registerHelper ( 'eq', function( arg1, arg2, ok, bad ) { 
 
     if ( arg1 == arg2 )
     {
@@ -184,7 +189,9 @@ Handlebars.registerHelper ( 'inc', function() {
             num = ( parseInt ( Number ( arguments [ 1 ] ), 10 ) + 1 );
         }
 
-        Handlebars.registerHelper ( arguments [ 0 ], num );
+        Handlebars.registerHelper ( arguments [ 0 ], num.toString () );
+
+        return '';
     }
 } );
 

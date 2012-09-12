@@ -2,7 +2,7 @@ HandlebarsJS helpers
 ==============
 
 Several helpers for you to help working with handlebarsjs (https://github.com/wycats/handlebars.js/) 
-Tested and working on 1.0.beta.2
+Tested and working on 1.0.beta.6!
 
 DOWNLOAD
 --------------
