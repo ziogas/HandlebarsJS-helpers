@@ -50,7 +50,6 @@ Handlebars.registerHelper ( 'check', function(arg1, arg2, options) {
         return options.inverse(this);
     }
 });
-});
 
 //"IF" style function
 Handlebars.registerHelper ( 'checknot', function(arg1, arg2, options) {
